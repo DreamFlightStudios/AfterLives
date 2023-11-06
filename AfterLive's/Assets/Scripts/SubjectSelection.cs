@@ -1,36 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SubjectSelection : MonoBehaviour
 {
     [SerializeField] private LevelComplete _levelComplete;
     [SerializeField] private Transform _pickUpPoint;
     [SerializeField] private float _distance;
+    [SerializeField] private AudioSource _doorOpen;
+
+    private Camera _camera;
+    private InputSystem _input;
     private GameObject _pickUpObject;
     private Rigidbody _pickUpRigidbody;
-    private bool _isPickUp = false;
+    private bool _isPickUp;
 
-    [SerializeField] private AudioSource _doorOpen;
-    void Update()
-    { 
-        if (Input.GetButtonDown("Fire1") && _isPickUp == false)
+    private void Awake()
+    {
+        _input = new InputSystem();
+        _input.Player.Shoot.Enable();
+        
+        _camera = Camera.main;
+    }
+
+    private void OnEnable() => _input.Player.Shoot.performed += Shoot;
+    private void OnDisable() => _input.Player.Shoot.performed -= Shoot;
+
+    private void Shoot(InputAction.CallbackContext _)
+    {
+        if (_isPickUp)
         {
-            CheckGround();
-        }   
-        else if (Input.GetButtonDown("Fire1") && _isPickUp == true)
-        {
-           _pickUpObject.transform.parent = null;
-           _pickUpRigidbody.isKinematic = false;
-           Collider Collider = _pickUpObject.GetComponent<Collider>();
-           Collider.isTrigger = false;
+            _pickUpObject.transform.parent = null;
+            _pickUpRigidbody.isKinematic = false;
+            Collider Collider = _pickUpObject.GetComponent<Collider>();
+            Collider.isTrigger = false;
             _isPickUp = false;
         }
+        else if (!_isPickUp) CheckGround();
     }
+
     private void CheckGround()
     {
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(_input.Ui.MousePosition.ReadValue<Vector2>());
 
         if (Physics.Raycast(ray, out hit, _distance))
         {
@@ -72,9 +83,9 @@ public class SubjectSelection : MonoBehaviour
             }
             else if (hit.collider.CompareTag("Train"))
             {
-            _pickUpObject = hit.collider.gameObject;
-            Animator _pickUpAnimator = _pickUpObject.GetComponent<Animator>();
-            _pickUpAnimator.SetTrigger("Move");
+                _pickUpObject = hit.collider.gameObject;
+                Animator _pickUpAnimator = _pickUpObject.GetComponent<Animator>();
+                _pickUpAnimator.SetTrigger("Move");
             }
             else if (hit.collider.CompareTag("Door"))
             {

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Unity.VisualScripting.Member;
 
 public class MenuButtons : MonoBehaviour
 {
@@ -48,6 +45,6 @@ public class MenuButtons : MonoBehaviour
     public void exit()
     {
         Application.Quit();
-        Debug.Log("выход");
+        Debug.Log("РІС‹С…РѕРґ");
     }
 }

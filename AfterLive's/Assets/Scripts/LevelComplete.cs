@@ -32,14 +32,14 @@ public class LevelComplete : MonoBehaviour
 
     private void Start()
     {
-        _subtitles.text += $"Пустота: {_introductoryWords}";
+        _subtitles.text += $"РџСѓСЃС‚РѕС‚Р°: {_introductoryWords}";
         TestCicle(_introductoryWords);
         Invoke("Hint", 90);
     }
     private void Hint()
     {
         if (_completed == false  && PlayerPrefs.HasKey("HintsActive") == false || _hintWords == "") return;
-        _subtitles.text += $"Пустота: {_hintWords}";
+        _subtitles.text += $"РџСѓСЃС‚РѕС‚Р°: {_hintWords}";
         TestCicle(_hintWords);
         _announcer.clip = _hintClip;
         _announcer.Play();
@@ -49,7 +49,7 @@ public class LevelComplete : MonoBehaviour
         if (_completed == true) return;
         _announcer.clip = _completeClip;
         _announcer.Play();
-        _subtitles.text = $"Пустота: {_finalWords}";
+        _subtitles.text = $"РџСѓСЃС‚РѕС‚Р°: {_finalWords}";
         TestCicle(_finalWords);
         _animator.SetTrigger("LevelComplete");
         for (int i = 0; i < _confettiParticleSystem.Length; i++)
@@ -65,14 +65,14 @@ public class LevelComplete : MonoBehaviour
     {
         _announcer.clip =_warningClip;
         _announcer.Play();
-        _subtitles.text += $"Пустота: {_warningWords}";
+        _subtitles.text += $"РџСѓСЃС‚РѕС‚Р°: {_warningWords}";
         Invoke("ClearText", _announcer.clip.length + _timeDelay);
     }
     public void CriticalError()
     {
         _announcer.clip = _CriticalErrorClip;
         _announcer.Play();
-        _subtitles.text = $"Пустота: {_criticalErrorWords}";
+        _subtitles.text = $"РџСѓСЃС‚РѕС‚Р°: {_criticalErrorWords}";
         TestCicle(_criticalErrorWords);
         Invoke("Continue", _announcer.clip.length + _timeDelay);
         _animator.SetTrigger("StartGame");
@@ -86,7 +86,7 @@ public class LevelComplete : MonoBehaviour
     {
         _announcer.clip = _ErrorClip;
         _announcer.Play();
-        _subtitles.text = $"Пустота: {_errorWords}";
+        _subtitles.text = $"РџСѓСЃС‚РѕС‚Р°: {_errorWords}";
         TestCicle(_errorWords);
     }
     private void TestCicle(string currentText)

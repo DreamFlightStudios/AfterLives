@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseScript : MonoBehaviour
@@ -11,26 +10,34 @@ public class PauseScript : MonoBehaviour
     [SerializeField] private AudioSource _audio;
     [SerializeField] private AudioClip _OnClick;
     [SerializeField] private AudioClip _Restart;
-    void Update()
+    private InputSystem _input;
+
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            _puseMenu.SetActive(true);
-            _audio.clip = _OnClick;
-            _audio.Play();
-            _settings.SetActive(false);
-            _pausePanal.SetActive(!_pausePanal.active);
-            if (_pausePanal.active == true)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-            else
-            {   
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
+        _input = new InputSystem();
+        _input.Ui.Esc.Enable();
     }
+
+    private void OnEnable() => _input.Ui.Esc.performed += Pause;
+
+    private void OnDisable() => _input.Ui.Esc.performed -= Pause;
+
+    private void Pause(InputAction.CallbackContext _)
+    {
+        _puseMenu.SetActive(true);
+        _audio.clip = _OnClick;
+        _audio.Play();
+        _settings.SetActive(false);
+        _pausePanal.SetActive(!_pausePanal.active);
+        
+        if (_pausePanal.active)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void Menu()
     {
         _audio.clip = _OnClick;

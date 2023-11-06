@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +21,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private AudioClip _onClickAudioClip;
 
     private GameObject _subtitles;
-    private GameObject[] _audioSource;
+    private AudioSource[] _audioSource;
 
     private void OnEnable()
     {
@@ -45,51 +45,36 @@ public class SettingsManager : MonoBehaviour
 
 
         _sensitivity.value = PlayerPrefs.GetFloat("Sensitivity");
-        GameObject Player = GameObject.FindGameObjectWithTag("Player");
-        if (Player != null) Player.GetComponent<FirstPersonController>().mouseSensitivity = PlayerPrefs.GetFloat("Sensitivity");
+        PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        if (player != null) player.SetRotateSpeed(PlayerPrefs.GetFloat("Sensitivity"));
         
         _volume.value = PlayerPrefs.GetFloat("VolumeFloat");
-        _audioSource = GameObject.FindGameObjectsWithTag("Audio");
-        for(int i = 0; i < _audioSource.Length; i++)
-        {
-            _audioSource[i].GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("VolumeFloat");
-        }
+        _audioSource = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audioSource in _audioSource) audioSource.volume = PlayerPrefs.GetFloat("VolumeFloat");
     }
 
     private void Save()
     {
         _onClickAudio.clip = _onClickAudioClip;
         _onClickAudio.Play();
-        if (_hintsActive.isOn)
-        {
-            PlayerPrefs.SetInt("HintsActive", 1);
-        }
-        else
-        {
-            PlayerPrefs.DeleteKey("HintsActive");
-        }
-        if(_subtitlesActive.isOn)
-        {
-            PlayerPrefs.SetInt("SubtitlesActive", 1);
-        }
-        else
-        {
-            PlayerPrefs.DeleteKey("SubtitlesActive");
-        }
+        
+        if (_hintsActive.isOn) PlayerPrefs.SetInt("HintsActive", 1);
+        else PlayerPrefs.DeleteKey("HintsActive");
+        
+        if(_subtitlesActive.isOn) PlayerPrefs.SetInt("SubtitlesActive", 1);
+        else PlayerPrefs.DeleteKey("SubtitlesActive");
+        
 
         PlayerPrefs.SetFloat("VolumeFloat", _volume.value);
         PlayerPrefs.SetFloat("Sensitivity", _sensitivity.value);
 
-        GameObject Player = GameObject.FindGameObjectWithTag("Player");
-        if (Player != null) Player.GetComponent<FirstPersonController>().mouseSensitivity = _sensitivity.value;
+        PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        if (player != null) player.SetRotateSpeed(_sensitivity.value);
 
-        _audioSource = GameObject.FindGameObjectsWithTag("Audio");
-        for (int i = 0; i < _audioSource.Length; i++)
-        {
-            _audioSource[i].GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("VolumeFloat");
-        }
-            _hintsActive.isOn = PlayerPrefs.HasKey("HintsActive");
-            _subtitles.SetActive(PlayerPrefs.HasKey("SubtitlesActive"));
+        _audioSource = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audioSource in _audioSource) audioSource.volume = PlayerPrefs.GetFloat("VolumeFloat");
+        _hintsActive.isOn = PlayerPrefs.HasKey("HintsActive");
+        _subtitles.SetActive(PlayerPrefs.HasKey("SubtitlesActive"));
     }
     public void Settings()
     {
