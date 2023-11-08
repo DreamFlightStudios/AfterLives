@@ -33,7 +33,7 @@ namespace Player
             _characterController = GetComponent<CharacterController>();
             _playerCamera = GetComponentInChildren<Camera>();
             
-            _outputCamera = new NativeArray<Vector2>( 2, Allocator.Persistent); 
+            _outputCamera = new NativeArray<Vector2>(2, Allocator.Persistent); 
             _outputVelocity = new NativeArray<Vector3>(2, Allocator.Persistent);
             
             Cursor.lockState = CursorLockMode.Locked;
@@ -94,7 +94,7 @@ namespace Player
         public void SetRotateSpeed(float speed) => _rotateSpeed = speed;
         
         [BurstCompile]
-        struct CameraRotateCalculation : IJob
+        private struct CameraRotateCalculation : IJob
         {
             [ReadOnly] public float DeltaTime;
             [ReadOnly] public Vector2 MouseDelta;
@@ -114,7 +114,7 @@ namespace Player
         }
 
         [BurstCompile]
-        struct VelocityCalculation : IJob
+        private struct VelocityCalculation : IJob
         {
             [ReadOnly] public float WalkSpeed;
             [ReadOnly] public float RunSpeed;
