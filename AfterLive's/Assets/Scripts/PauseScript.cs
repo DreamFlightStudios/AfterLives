@@ -61,6 +61,7 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = 1f;
     }
  
-    private void exit() {SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
-    private void menu() { SceneManager.LoadScene(0);}
+    private void exit() => SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
+
+    private void menu() => SceneLoader.Instance.LoadScene("-1");
 }

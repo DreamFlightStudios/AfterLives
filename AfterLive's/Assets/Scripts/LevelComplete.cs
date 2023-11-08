@@ -89,38 +89,13 @@ public class LevelComplete : MonoBehaviour
         _subtitles.text = $"Пустота: {_errorWords}";
         TestCicle(_errorWords);
     }
-    private void TestCicle(string currentText)
-    {
-        Invoke("ClearText", _announcer.clip.length + _timeDelay);
-    }
-    private void ClearText()
-    {
-       _subtitles.text = "";
-    }
-    public void BackMenu()
-    {
-        _animator.SetTrigger("LevelComplete");
-        Invoke("LSMenu", 6);
-    }
-    private void LSMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
+    private void TestCicle(string currentText) => Invoke("ClearText", _announcer.clip.length + _timeDelay);
+    private void ClearText() => _subtitles.text = "";
+
     public void LoadNextScene()
     {
-        if (PlayerPrefs.GetInt("NextScene") == 8)
-        {
-            SceneManager.LoadScene(0);
-        }
-        else
-        {
-            int nextScene = PlayerPrefs.GetInt("NextScene") + 1;
-            PlayerPrefs.SetInt("NextScene", nextScene);
-            SceneManager.LoadScene(PlayerPrefs.GetInt("NextScene"));
-        }
+        int activeScene = int.Parse(SceneManager.GetActiveScene().name);
+        SceneLoader.Instance.LoadScene(activeScene == 6 ? "0" : (activeScene + 1).ToString());
     }
-    private void Continue()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    private void Continue() => SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
 }
