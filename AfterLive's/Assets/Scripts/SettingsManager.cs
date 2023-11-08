@@ -7,7 +7,7 @@ public class SettingsManager : MonoBehaviour
     [Header("Canvas")]
     [SerializeField] private GameObject _menu;
     [SerializeField] private GameObject _settings;
-    [Header("Slider")]
+    [Header("Settings")]
     [SerializeField] private Slider _volume;
     [SerializeField] private Slider _sensitivity;
     [SerializeField] private Toggle _hintsActive;
