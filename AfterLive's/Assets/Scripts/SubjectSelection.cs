@@ -57,30 +57,6 @@ public class SubjectSelection : MonoBehaviour
                 _pickUpObject.transform.parent = _pickUpPoint;
                 _isPickUp = true;
             }
-            else if (hit.collider.CompareTag("Object"))
-            {
-                _pickUpObject = hit.collider.gameObject;
-                _pickUpRigidbody = _pickUpObject.GetComponent<Rigidbody>();
-                _pickUpRigidbody.isKinematic = true;
-                Collider Collider = _pickUpObject.GetComponent<Collider>();
-                Collider.isTrigger = true;
-                _pickUpObject.transform.rotation = Quaternion.identity;
-                _pickUpObject.transform.position = _pickUpPoint.position;
-                _pickUpObject.transform.parent = _pickUpPoint;
-                _isPickUp = true;
-            }
-            if (hit.collider.CompareTag("Object"))
-            {
-                _pickUpObject = hit.collider.gameObject;
-                _pickUpRigidbody = _pickUpObject.GetComponent<Rigidbody>();
-                _pickUpRigidbody.isKinematic = true;
-                Collider Collider = _pickUpObject.GetComponent<Collider>();
-                Collider.isTrigger = true;
-                _pickUpObject.transform.rotation = Quaternion.identity;
-                _pickUpObject.transform.position = _pickUpPoint.position;
-                _pickUpObject.transform.parent = _pickUpPoint;
-                _isPickUp = true;
-            }
             else if (hit.collider.CompareTag("Train"))
             {
                 _pickUpObject = hit.collider.gameObject;

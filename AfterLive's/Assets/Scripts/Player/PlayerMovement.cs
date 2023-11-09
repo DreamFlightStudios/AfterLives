@@ -10,6 +10,7 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private float _walkSpeed = 5;
+        [SerializeField] private float _mass = 65;
         [SerializeField] private float _runSpeed = 8;
         [SerializeField] private float _rotateSpeed = 10;
         [SerializeField] private float _jumpForce = 5;
@@ -76,7 +77,7 @@ namespace Player
 
         private void FixedUpdate()
         {
-            if (_characterController.isGrounded) _velocity.y = -0.1f;
+            if (_characterController.isGrounded) _velocity.y = -1f;
             else _velocity.y += _gravity * Time.fixedDeltaTime;
         }
 
