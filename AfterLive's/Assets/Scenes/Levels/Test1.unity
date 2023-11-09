@@ -397,7 +397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 431943870280511932, guid: 7ae3edf19639eb348974177655501965, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 60.7
       objectReference: {fileID: 0}
     - target: {fileID: 3834000863644483969, guid: 7ae3edf19639eb348974177655501965, type: 3}
       propertyPath: m_RootOrder
@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  m_UsePipelineSettings: 1
+  m_UsePipelineSettings: 0
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
   m_CustomShadowLayers: 0
@@ -2043,7 +2043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1988791210662691144, guid: e653ffd6b8ef4fe4fb64e133df2966a4, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 60.7
       objectReference: {fileID: 0}
     - target: {fileID: 3121578108219568501, guid: e653ffd6b8ef4fe4fb64e133df2966a4, type: 3}
       propertyPath: m_RootOrder

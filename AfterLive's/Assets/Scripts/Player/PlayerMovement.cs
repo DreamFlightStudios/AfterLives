@@ -76,11 +76,11 @@ namespace Player
 
         private void FixedUpdate()
         {
-            if (_characterController.isGrounded) _velocity.y = -0.1f;
+            if (_characterController.isGrounded && _velocity.y <= -0.1f) _velocity.y = -0.1f;
             else _velocity.y += _gravity * Time.fixedDeltaTime;
         }
 
-        private void Jump(InputAction.CallbackContext callbackContext) { if (_characterController.isGrounded) _velocity.y = _jumpForce; }
+        private void Jump(InputAction.CallbackContext _) { if (_characterController.isGrounded && _velocity.y < _jumpForce) _velocity.y = _jumpForce; }
 
         private void OnDestroy()
         {

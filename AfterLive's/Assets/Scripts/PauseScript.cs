@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class PauseScript : MonoBehaviour
 {
@@ -25,17 +24,8 @@ public class PauseScript : MonoBehaviour
     private void Pause(InputAction.CallbackContext _)
     {
         _puseMenu.SetActive(true);
-        _audio.clip = _OnClick;
-        _audio.Play();
         _settings.SetActive(false);
-        _pausePanal.SetActive(!_pausePanal.active);
-        
-        if (_pausePanal.active)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else Cursor.lockState = CursorLockMode.Locked;
+        Continue();
     }
 
     public void Menu()
@@ -49,19 +39,25 @@ public class PauseScript : MonoBehaviour
     {
         _audio.clip = _OnClick;
         _audio.Play();
-        _pausePanal.SetActive(false);
-        Time.timeScale = 1f;
-        Cursor.visible = !Cursor.visible;
+        _pausePanal.SetActive(!_pausePanal.activeSelf);
+        Time.timeScale = _pausePanal.activeSelf ? 0 : 1;
+        
+        if (_pausePanal.activeSelf)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else Cursor.lockState = CursorLockMode.Locked;
     }
     public void Restart()
     {
         _audio.clip = _OnClick;
         _audio.Play();
-        Invoke("exit", 1);
         Time.timeScale = 1f;
+        Invoke("exit", 1);
     }
  
-    private void exit() => SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
+    private void exit() => SceneLoader.Instance.LoadScene(PlayerPrefs.GetString("LastLevel"));
 
     private void menu() => SceneLoader.Instance.LoadScene("-1");
 }

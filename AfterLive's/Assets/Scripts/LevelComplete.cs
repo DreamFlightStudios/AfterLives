@@ -94,8 +94,8 @@ public class LevelComplete : MonoBehaviour
 
     public void LoadNextScene()
     {
-        int activeScene = int.Parse(SceneManager.GetActiveScene().name);
+        int activeScene = int.Parse(PlayerPrefs.GetString("LastLevel"));
         SceneLoader.Instance.LoadScene(activeScene == 6 ? "0" : (activeScene + 1).ToString());
     }
-    private void Continue() => SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
+    private void Continue() => SceneLoader.Instance.LoadScene(PlayerPrefs.GetString("LastLevel"));
 }
